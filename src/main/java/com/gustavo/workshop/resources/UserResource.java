@@ -37,12 +37,6 @@ public class UserResource {
 		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 	
-	/*
-	
-	isso gerara um status 201, mas com o caminho do novo arquivo
-	
-	*/
-	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody UserDTO objDTO) {
 		User obj = service.fromDTO(objDTO);
@@ -51,5 +45,10 @@ public class UserResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable String id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
 
 }
