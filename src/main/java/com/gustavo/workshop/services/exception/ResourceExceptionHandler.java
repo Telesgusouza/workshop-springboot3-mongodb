@@ -18,20 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 	
-	/*
-	  
-	 System.currentTimeMillis() = pega o estante do erro
-	 
-	 isso diz que tipo de erro ele é, no caso um documento não encontrado (not found)
-
-	 descrição curt do erro
-	 
-	 mensagem
-	 
-	 caminho do erro
-	 */
-	
-	
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
