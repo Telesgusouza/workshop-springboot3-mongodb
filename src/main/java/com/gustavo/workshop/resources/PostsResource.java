@@ -1,5 +1,6 @@
 package com.gustavo.workshop.resources;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,32 @@ public class PostsResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	//        /titlesearch/text
 	@RequestMapping(value="/titlesearch", method = RequestMethod.GET)
 	public ResponseEntity<List<Post>> findTitle(@RequestParam(value = "text", defaultValue = "") String text) {
 		
-		// decodificar texto
 		text = URL.decodeParam(text);
 		List<Post> list = service.findByTitle(text);
+		
+		return ResponseEntity.ok().body(list);
+	}
+	
+	/*
+
+	new Date(0L) - gera uma data minima
+	
+	*/
+	
+	@RequestMapping(value="/fullsearch", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findSearch(
+			@RequestParam(value = "text", defaultValue = "") String text,
+			@RequestParam(value = "minDate", defaultValue = "") String minDate,
+			@RequestParam(value = "maxDate", defaultValue = "") String maxDate
+			) {
+		
+		text = URL.decodeParam(text);
+		Date min = URL.convertDate(minDate, new Date(0L));
+		Date max = URL.convertDate(maxDate, new Date());
+		List<Post> list = service.fullSearch(text, min, max);
 		
 		return ResponseEntity.ok().body(list);
 	}
